@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.BreakingNewsFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/breakingNewsRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/breakingNewsRecyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/breakingNewsRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/breakingNewsRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/breakingNewsRecyclerView" />
+
+    <LinearLayout
+        android:id="@+id/tryAgainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/breakingNewsRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/breakingNewsRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/breakingNewsRecyclerView">
+
+        <TextView
+            android:id="@+id/tryAgainMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Internet Connection"
+            android:textColor="#BA000000"
+            android:textSize="20sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tryAgainButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Try Again" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
