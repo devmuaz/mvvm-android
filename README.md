@@ -3,7 +3,7 @@ A very simple app that contains the following:
 
 - Written in kotlin
 - MVVM architecture
-- Using kotlin Couroutines, Retrofit, Room Database and more
+- Using kotlin Coroutines, Retrofit, Room Database and more
 
 ## UI Stuff and Libraries
 - Icons [From Here](https://www.flaticon.com/packs/essential-set-2)
