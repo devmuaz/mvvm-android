@@ -3,6 +3,9 @@
 - MVVM architecture
 - Using kotlin Couroutines, Retrofit, Room Database and more
 
+## UI Stuff
+- Icons [From Here](https://www.flaticon.com/packs/essential-set-2)
+- Material Design library
 ## Preview
 <p align="center">
   <img src="Screenshots/1.jpg" width="200" hieght="200">
