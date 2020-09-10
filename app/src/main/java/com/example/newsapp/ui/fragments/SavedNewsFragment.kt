@@ -25,14 +25,14 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
         parentActivity = activity as MainActivity
         viewModel = parentActivity.viewModel
-        initRecyclerView()
+        initNewsRecyclerView()
 
         viewModel.getSavedArticles().observe(viewLifecycleOwner, {
             newsAdapter.differ.submitList(it)
         })
     }
 
-    private fun initRecyclerView() {
+    private fun initNewsRecyclerView() {
         newsAdapter = NewsAdapter()
 
         newsAdapter.onItemClickListener { article ->

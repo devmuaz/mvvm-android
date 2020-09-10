@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
+import com.example.newsapp.adapters.CategoriesAdapter
 import com.example.newsapp.adapters.NewsAdapter
 import com.example.newsapp.ui.ArticleActivity
 import com.example.newsapp.ui.MainActivity
+import com.example.newsapp.utils.Constants.categories
 import com.example.newsapp.utils.Resource
 import com.example.newsapp.viewmodels.NewsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -19,6 +21,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     private lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
+    private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var parentActivity: MainActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,7 +29,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
         parentActivity = activity as MainActivity
         viewModel = parentActivity.viewModel
-        initRecyclerView()
+        initCategoriesRecyclerView()
+        initNewsRecyclerView()
 
         viewModel.newsData.observe(viewLifecycleOwner, { response ->
             when (response) {
@@ -49,7 +53,18 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         tryAgainButton.setOnClickListener { viewModel.getBreakingNews() }
     }
 
-    private fun initRecyclerView() {
+    private fun initCategoriesRecyclerView() {
+        categoriesAdapter = CategoriesAdapter(categories)
+
+        categoriesAdapter.onItemClickListener { viewModel.getBreakingNews(it) }
+
+        categoriesRecyclerView.apply {
+            adapter = categoriesAdapter
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun initNewsRecyclerView() {
         newsAdapter = NewsAdapter()
 
         newsAdapter.onItemClickListener { article ->

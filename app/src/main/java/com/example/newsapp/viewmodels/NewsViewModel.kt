@@ -12,6 +12,7 @@ import com.example.newsapp.models.NewsResponse
 import com.example.newsapp.repositories.NewsRepository
 import com.example.newsapp.services.NewsService
 import com.example.newsapp.services.RetrofitSingleton
+import com.example.newsapp.utils.Constants.categories
 import com.example.newsapp.utils.NewsApplication
 import com.example.newsapp.utils.Resource
 import kotlinx.coroutines.launch
@@ -28,12 +29,12 @@ class NewsViewModel(private val newsRepository: NewsRepository, app: Application
         getBreakingNews()
     }
 
-    fun getBreakingNews() = viewModelScope.launch {
+    fun getBreakingNews(category: String = categories.first()) = viewModelScope.launch {
         newsData.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
                 val response = RetrofitSingleton.build(NewsService::class.java)
-                    .getTopHeadlines(pageNumber = breakingNewsPage)
+                    .getTopHeadlines(pageNumber = breakingNewsPage, categoryType = category)
                 if (response.isSuccessful) {
                     newsDataTemp.postValue(Resource.Success(response.body()!!))
                     newsData.postValue(Resource.Success(response.body()!!))
