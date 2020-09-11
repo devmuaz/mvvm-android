@@ -3,6 +3,8 @@ package com.example.newsapp.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -95,8 +97,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun progressBarStatus(status: Boolean) {
-        if (status) progressBar.visibility = View.VISIBLE
-        else progressBar.visibility = View.GONE
+        progressBar.visibility = if (status) VISIBLE else GONE
     }
 
     private fun tryAgainStatus(status: Boolean, message: String = "message") {

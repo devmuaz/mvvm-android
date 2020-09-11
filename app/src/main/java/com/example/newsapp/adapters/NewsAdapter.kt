@@ -8,9 +8,9 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.models.Article
+import com.example.newsapp.utils.loadImage
 import com.snov.timeagolibrary.PrettyTimeAgo
 import com.snov.timeagolibrary.PrettyTimeAgo.getTimeAgo
 import kotlinx.android.synthetic.main.item_article_card.view.*
@@ -47,7 +47,7 @@ class NewsAdapter(@LayoutRes private val res: Int = R.layout.item_article_card) 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val currentArticle = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(currentArticle.urlToImage).into(articleImage)
+            context.loadImage(currentArticle.urlToImage, articleImage)
             articleTitle.text = currentArticle.title
 
             // Converting DateTime format to TimeAgo format
