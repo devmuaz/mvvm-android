@@ -13,7 +13,7 @@ import com.example.newsapp.repositories.NewsRepository
 import com.example.newsapp.services.NewsService
 import com.example.newsapp.services.RetrofitSingleton
 import com.example.newsapp.utils.Constants.categories
-import com.example.newsapp.utils.NewsApplication
+import com.example.newsapp.NewsApplication
 import com.example.newsapp.utils.Resource
 import kotlinx.coroutines.launch
 

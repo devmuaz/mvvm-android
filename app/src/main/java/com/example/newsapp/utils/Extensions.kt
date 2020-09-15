@@ -2,6 +2,7 @@ package com.example.newsapp.utils
 
 import android.content.Context
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
 fun Context.loadImage(url: String?, view: ImageView) = Glide

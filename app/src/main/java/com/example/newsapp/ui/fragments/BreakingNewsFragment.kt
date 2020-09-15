@@ -69,12 +69,12 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private fun initNewsRecyclerView() {
         newsAdapter = NewsAdapter()
 
-        newsAdapter.onItemClickListener { article ->
-            val bundle = Bundle().apply { putSerializable("article", article) }
-            val intent = Intent(activity, ArticleActivity::class.java)
-            intent.putExtras(bundle)
-            startActivity(intent)
-        }
+//        newsAdapter.onItemClickListener { article ->
+//            val bundle = Bundle().apply { putSerializable("article", article) }
+//            val intent = Intent(activity, ArticleActivity::class.java)
+//            intent.putExtras(bundle)
+//            startActivity(intent)
+//        }
 
         breakingNewsRecyclerView.apply {
             adapter = newsAdapter

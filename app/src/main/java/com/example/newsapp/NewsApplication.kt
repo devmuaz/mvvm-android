@@ -1,4 +1,4 @@
-package com.example.newsapp.utils
+package com.example.newsapp
 
 import android.app.Application
 

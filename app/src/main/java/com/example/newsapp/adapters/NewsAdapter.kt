@@ -1,72 +1,41 @@
 package com.example.newsapp.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
+import com.example.newsapp.adapters.DifferCallbacks.newsDifferCallback
+import com.example.newsapp.databinding.ItemArticleCardBinding
 import com.example.newsapp.models.Article
-import com.example.newsapp.utils.loadImage
-import com.snov.timeagolibrary.PrettyTimeAgo
-import com.snov.timeagolibrary.PrettyTimeAgo.getTimeAgo
-import kotlinx.android.synthetic.main.item_article_card.view.*
-import java.text.SimpleDateFormat
 
 class NewsAdapter(@LayoutRes private val res: Int = R.layout.item_article_card) :
-    RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+    RecyclerView.Adapter<NewsViewHolder>() {
 
-    // View Holder
-    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    // Differ callback
-    private val differCallback = object : DiffUtil.ItemCallback<Article>() {
-        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.url == newItem.url
-        }
-
-        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    val differ = AsyncListDiffer(this, differCallback)
-
+    val differ = AsyncListDiffer(this, newsDifferCallback)
 
     override fun getItemCount(): Int = differ.currentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(res, parent, false)
-        return NewsViewHolder(view)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val itemArticleCardBinding = DataBindingUtil.inflate<ItemArticleCardBinding>(
+            layoutInflater, res, parent, false
+        )
+        return NewsViewHolder(itemArticleCardBinding)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val currentArticle = differ.currentList[position]
-        holder.itemView.apply {
-            context.loadImage(currentArticle.urlToImage, articleImage)
-            articleTitle.text = currentArticle.title
-
-            // Converting DateTime format to TimeAgo format
-            articleDateTime?.text = timestampToTimeAgo(currentArticle.publishedAt)
-
-            // adding a click listener to each item
-            setOnClickListener { onItemClickListener?.let { it(currentArticle) } }
-        }
+        holder.bind(currentArticle)
     }
+}
 
-    @SuppressLint("SimpleDateFormat")
-    private fun timestampToTimeAgo(time: String): String {
-        val timeFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        return getTimeAgo(PrettyTimeAgo.timestampToMilli(time, timeFormat))
-    }
+class NewsViewHolder(binding: ItemArticleCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    private val itemBinding = binding
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
-
-    fun onItemClickListener(listener: (Article) -> Unit) {
-        onItemClickListener = listener
+    fun bind(article: Article) {
+        itemBinding.article = article
     }
 }
