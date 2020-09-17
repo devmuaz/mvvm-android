@@ -1,4 +1,4 @@
-package com.example.newsapp.adapters
+package com.example.newsapp.ui.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.newsapp.models.Article

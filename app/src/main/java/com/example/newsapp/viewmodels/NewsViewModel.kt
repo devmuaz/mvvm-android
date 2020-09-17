@@ -1,20 +1,16 @@
 package com.example.newsapp.viewmodels
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities.*
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.NewsApplication
 import com.example.newsapp.models.Article
 import com.example.newsapp.models.NewsResponse
 import com.example.newsapp.repositories.NewsRepository
-import com.example.newsapp.services.NewsService
-import com.example.newsapp.services.RetrofitSingleton
 import com.example.newsapp.utils.Constants.categories
-import com.example.newsapp.NewsApplication
 import com.example.newsapp.utils.Resource
+import com.example.newsapp.utils.hasInternetConnection
 import kotlinx.coroutines.launch
 
 class NewsViewModel(private val newsRepository: NewsRepository, app: Application) :
@@ -32,9 +28,8 @@ class NewsViewModel(private val newsRepository: NewsRepository, app: Application
     fun getBreakingNews(category: String = categories.first()) = viewModelScope.launch {
         newsData.postValue(Resource.Loading())
         try {
-            if (hasInternetConnection()) {
-                val response = RetrofitSingleton.build(NewsService::class.java)
-                    .getTopHeadlines(pageNumber = breakingNewsPage, categoryType = category)
+            if (hasInternetConnection<NewsApplication>()) {
+                val response = newsRepository.getTopHeadlines(category, breakingNewsPage)
                 if (response.isSuccessful) {
                     newsDataTemp.postValue(Resource.Success(response.body()!!))
                     newsData.postValue(Resource.Success(response.body()!!))
@@ -52,9 +47,8 @@ class NewsViewModel(private val newsRepository: NewsRepository, app: Application
     fun getSearchNews(searchQuery: String) = viewModelScope.launch {
         newsData.postValue(Resource.Loading())
         try {
-            if (hasInternetConnection()) {
-                val response = RetrofitSingleton.build(NewsService::class.java)
-                    .searchHeadlines(searchQuery, pageNumber = searchNewsPage)
+            if (hasInternetConnection<NewsApplication>()) {
+                val response = newsRepository.getSearchQuery(searchQuery, searchNewsPage)
                 if (response.isSuccessful) {
                     newsData.postValue(Resource.Success(response.body()!!))
                 } else {
@@ -80,20 +74,5 @@ class NewsViewModel(private val newsRepository: NewsRepository, app: Application
 
     fun onSearchClose() {
         newsData.postValue(newsDataTemp.value)
-    }
-
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager = getApplication<NewsApplication>().getSystemService(
-            Context.CONNECTIVITY_SERVICE,
-        ) as ConnectivityManager
-
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return when {
-            capabilities.hasTransport(TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
-            capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
     }
 }

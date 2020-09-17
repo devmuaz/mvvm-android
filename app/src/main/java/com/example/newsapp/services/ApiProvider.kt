@@ -6,11 +6,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitSingleton {
+class ApiProvider {
 
     companion object {
 
-        private val retrofit by lazy {
+        val retrofit: NewsApiService by lazy {
             val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder().addInterceptor(logger).build()
 
@@ -19,10 +19,7 @@ class RetrofitSingleton {
                 .baseUrl(BASE_URL)
                 .client(client)
                 .build()
-        }
-
-        fun <T> build(classType: Class<T>): T {
-            return retrofit.create(classType)
+                .create(NewsApiService::class.java)
         }
     }
 }

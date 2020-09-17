@@ -1,4 +1,4 @@
-package com.example.newsapp.adapters
+package com.example.newsapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
-import com.example.newsapp.adapters.DifferCallbacks.newsDifferCallback
+import com.example.newsapp.ui.adapters.DifferCallbacks.newsDifferCallback
 import com.example.newsapp.databinding.ItemArticleCardBinding
 import com.example.newsapp.models.Article
 

@@ -1,4 +1,4 @@
-package com.example.newsapp.adapters
+package com.example.newsapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.graphics.Color
