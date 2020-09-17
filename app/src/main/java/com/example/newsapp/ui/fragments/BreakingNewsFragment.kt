@@ -1,22 +1,18 @@
 package com.example.newsapp.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.adapters.CategoriesAdapter
 import com.example.newsapp.adapters.NewsAdapter
-import com.example.newsapp.ui.ArticleActivity
 import com.example.newsapp.ui.MainActivity
 import com.example.newsapp.utils.Constants.categories
 import com.example.newsapp.utils.Resource
 import com.example.newsapp.viewmodels.NewsViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
@@ -76,24 +72,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 //            startActivity(intent)
 //        }
 
-        breakingNewsRecyclerView.apply {
-            adapter = newsAdapter
-            layoutManager = LinearLayoutManager(activity)
-
-            val bottomNavBar = parentActivity.findViewById<BottomNavigationView>(
-                R.id.bottomNavigationView,
-            )
-
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0 && bottomNavBar.isShown) {
-                        bottomNavBar.visibility = View.GONE
-                    } else if (dy < 0) {
-                        bottomNavBar.visibility = View.VISIBLE
-                    }
-                }
-            })
-        }
+        breakingNewsRecyclerView.adapter = newsAdapter
     }
 
     private fun progressBarStatus(status: Boolean) {
