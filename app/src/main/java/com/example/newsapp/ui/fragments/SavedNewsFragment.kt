@@ -16,13 +16,11 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
-    private lateinit var parentActivity: MainActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        parentActivity = activity as MainActivity
-        viewModel = parentActivity.viewModel
+        viewModel = (activity as MainActivity).viewModel
         initNewsRecyclerView()
 
         viewModel.getSavedArticles().observe(viewLifecycleOwner, {
@@ -46,20 +44,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         savedArticlesRecyclerView.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-
-            val bottomNavBar = parentActivity.findViewById<BottomNavigationView>(
-                R.id.bottomNavigationView,
-            )
-
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0 && bottomNavBar.isShown) {
-                        bottomNavBar.visibility = View.GONE
-                    } else if (dy < 0) {
-                        bottomNavBar.visibility = View.VISIBLE
-                    }
-                }
-            })
         }
     }
 }
