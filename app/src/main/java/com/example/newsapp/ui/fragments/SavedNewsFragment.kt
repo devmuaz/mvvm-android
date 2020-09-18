@@ -30,20 +30,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private fun initNewsRecyclerView() {
         newsAdapter = NewsAdapter()
-
-//        newsAdapter.onItemClickListener { article ->
-//            val bundle = Bundle().apply {
-//                putSerializable("article", article)
-//                putBoolean("canRemoveArticle", true)
-//            }
-//            val intent = Intent(activity, ArticleActivity::class.java)
-//            intent.putExtras(bundle)
-//            startActivity(intent)
-//        }
-
-        savedArticlesRecyclerView.apply {
-            adapter = newsAdapter
-            layoutManager = LinearLayoutManager(activity)
-        }
+        savedArticlesRecyclerView.adapter = newsAdapter
     }
 }

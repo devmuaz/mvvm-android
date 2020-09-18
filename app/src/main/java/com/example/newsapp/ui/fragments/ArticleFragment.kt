@@ -30,7 +30,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
     }
 
     private fun initArticleData(article: Article) {
-        context?.loadImage(article.urlToImage, articleImage)
+        articleImage.loadImage(article.urlToImage)
         articleTitle.text = article.title
         articleDescription.text = article.description
         articleContent.text = article.content

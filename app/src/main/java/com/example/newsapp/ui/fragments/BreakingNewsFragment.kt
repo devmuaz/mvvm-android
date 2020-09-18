@@ -11,7 +11,7 @@ import com.example.newsapp.ui.adapters.CategoriesAdapter
 import com.example.newsapp.ui.adapters.NewsAdapter
 import com.example.newsapp.ui.MainActivity
 import com.example.newsapp.utils.Constants.categories
-import com.example.newsapp.utils.Resource
+import com.example.newsapp.resources.NewsResource
 import com.example.newsapp.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
@@ -30,16 +30,16 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
         viewModel.newsData.observe(viewLifecycleOwner, { response ->
             when (response) {
-                is Resource.Success -> {
+                is NewsResource.Success -> {
                     progressBarStatus(false)
                     tryAgainStatus(false)
                     newsAdapter.differ.submitList(response.data!!.articles)
                 }
-                is Resource.Error -> {
+                is NewsResource.Error -> {
                     tryAgainStatus(true, response.message!!)
                     progressBarStatus(false)
                 }
-                is Resource.Loading -> {
+                is NewsResource.Loading -> {
                     tryAgainStatus(false)
                     progressBarStatus(true)
                 }
@@ -51,7 +51,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     private fun initCategoriesRecyclerView() {
         categoriesAdapter = CategoriesAdapter(categories)
-
         categoriesAdapter.onItemClickListener { viewModel.getBreakingNews(it) }
 
         categoriesRecyclerView.apply {
@@ -62,11 +61,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     private fun initNewsRecyclerView() {
         newsAdapter = NewsAdapter()
-
-        breakingNewsRecyclerView.apply {
-            adapter = newsAdapter
-            layoutManager = LinearLayoutManager(activity)
-        }
+        breakingNewsRecyclerView.adapter = newsAdapter
     }
 
     private fun progressBarStatus(status: Boolean) {

@@ -3,7 +3,9 @@
 
     <data>
 
-        <import type="com.example.newsapp.utils.DateTimeUtils" />
+        <variable
+            name="handler"
+            type="com.example.newsapp.utils.Handler" />
 
         <variable
             name="article"
@@ -21,6 +23,7 @@
         android:layout_marginBottom="2dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{(v) -> handler.onArticleClicked(v, article)}"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp">
 
@@ -32,10 +35,10 @@
 
             <ImageView
                 android:id="@+id/articleImage"
-                articleImage="@{article.urlToImage}"
                 android:layout_width="158dp"
                 android:layout_height="0dp"
-                android:scaleType="centerCrop"
+                android:scaleType="center"
+                app:imageUrl="@{article.urlToImage}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -68,11 +71,11 @@
                 android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{DateTimeUtils.INSTANCE.timestampToTimeAgo(article.publishedAt)}"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/articleImage" />
+                app:layout_constraintStart_toEndOf="@+id/articleImage"
+                app:timeAgoFormat="@{article.publishedAt}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,7 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
+import com.bumptech.glide.Glide
+import com.example.newsapp.R
 
 fun <T : Application> AndroidViewModel.hasInternetConnection(): Boolean {
     val connectivityManager = getApplication<T>().getSystemService(
@@ -20,3 +23,11 @@ fun <T : Application> AndroidViewModel.hasInternetConnection(): Boolean {
         else -> false
     }
 }
+
+fun ImageView.loadImage(url: String?) = Glide
+    .with(this)
+    .load(url)
+    .placeholder(R.drawable.ic_downloadable)
+    .error(R.drawable.ic_error)
+    .into(this)
+

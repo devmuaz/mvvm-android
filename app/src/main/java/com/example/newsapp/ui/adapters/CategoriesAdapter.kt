@@ -10,7 +10,7 @@ import com.example.newsapp.R
 import kotlinx.android.synthetic.main.item_category_card.view.*
 
 class CategoriesAdapter(private val categories: List<String>) :
-    RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+    RecyclerView.Adapter<CategoryViewHolder>() {
 
     private var selectedPosition: Int = 0
 
@@ -54,6 +54,6 @@ class CategoriesAdapter(private val categories: List<String>) :
     }
 
     override fun getItemCount(): Int = categories.size
-
-    class CategoryViewHolder(viewItem: View) : RecyclerView.ViewHolder(viewItem)
 }
+
+class CategoryViewHolder(viewItem: View) : RecyclerView.ViewHolder(viewItem)

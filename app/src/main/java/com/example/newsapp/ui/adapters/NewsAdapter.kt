@@ -7,9 +7,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
-import com.example.newsapp.ui.adapters.DifferCallbacks.newsDifferCallback
 import com.example.newsapp.databinding.ItemArticleCardBinding
 import com.example.newsapp.models.Article
+import com.example.newsapp.ui.adapters.DifferCallbacks.newsDifferCallback
+import com.example.newsapp.utils.Handler
 
 class NewsAdapter(@LayoutRes private val res: Int = R.layout.item_article_card) :
     RecyclerView.Adapter<NewsViewHolder>() {
@@ -23,6 +24,7 @@ class NewsAdapter(@LayoutRes private val res: Int = R.layout.item_article_card) 
         val itemArticleCardBinding = DataBindingUtil.inflate<ItemArticleCardBinding>(
             layoutInflater, res, parent, false
         )
+        itemArticleCardBinding.handler = Handler.instance
         return NewsViewHolder(itemArticleCardBinding)
     }
 
